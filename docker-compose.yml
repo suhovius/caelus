@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16.2
+    volumes:
+      # Named volume to persist database data outside of container.
+      # Format is "named_volume:path/in/container"
+      - db_pg_data:/var/lib/postgresql/data
+      # Host mount for one-time initialization.
+      # Format is "./path/on/host:/path/in/container"
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      # Map to something other than default 5432 on host in case Postgres
+      # is also running natively on host.
+      # Format is "host:container"
+      - "5435:5432"
+    expose:
+      - "5435"
+    environment:
+      POSTGRES_USER: postgres
+      # Sets the superuser password for PostgreSQL
+      POSTGRES_PASSWORD: dev-password
+
+  redis:
+    image: redis:7.2.4
+    ports:
+      - "6399:6379"
+    volumes:
+    - redis_data:/var/lib/redis/data
+volumes:
+  db_pg_data:
+  redis_data:
