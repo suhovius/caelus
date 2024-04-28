@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 ruby '3.3.1'
 
+gem 'sassc-rails'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 7.1.3', '>= 7.1.3.2'
 
@@ -42,6 +44,7 @@ gem 'dotenv-rails', '~> 3.1'
 gem 'activeadmin', '~> 3.2'
 gem 'active_model_serializers', '~> 0.10.2'
 gem 'carrierwave', '~> 3.0', '>= 3.0.7'
+gem 'csv', '~> 3.3'
 gem 'devise', '~> 4.9', '>= 4.9.4'
 gem 'pundit', '~> 2.3', '>= 2.3.1'
 gem 'sidekiq', '~> 7.2', '>= 7.2.4'
