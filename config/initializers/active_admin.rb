@@ -4,7 +4,7 @@ ActiveAdmin.setup do |config|
   # Set the title that is displayed on the main layout
   # for each of the active admin pages.
   #
-  config.site_title = "Caelus"
+  config.site_title = "#{Rails.application.config.application_title} Admin"
 
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
@@ -278,8 +278,10 @@ ActiveAdmin.setup do |config|
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
       menu.add label: 'System configuration' do |submenu|
-        submenu.add label: 'Sidekiq API', url: '/sidekiq', priority: 4, html_options: { target: :blank }
-        submenu.add label: 'rSwag API Documentation', url: '/admin/api-docs', priority: 5, html_options: { target: :blank }
+        submenu.add label: 'Sidekiq API', url: '/sidekiq', priority: 4, html_options: { target: :blank },
+                    if: -> { current_admin_user.has_cached_role?(:system_admin) }
+        submenu.add label: 'rSwag API Documentation', url: '/admin/api-docs', priority: 5, html_options: { target: :blank },
+                    if: -> { current_admin_user.has_cached_role?(:system_admin) }
       end
     end
   end

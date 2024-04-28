@@ -5,6 +5,27 @@
 if Rails.env.development?
   # Admin User for development purposes
   # in production admins must have secure passwords
-  admin_user = AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
-  admin_user.add_role(:system_admin)
+  unless AdminUser.exists?(email: 'super.admin@caelus.com')
+    admin_user = AdminUser.create!(
+      email: 'super.admin@caelus.com',
+      password: 'qwerty',
+      password_confirmation: 'qwerty'
+    )
+
+    admin_user.add_role(:system_admin)
+  end
+
+  unless Organization.exists?(name: 'Meteo Tech')
+    organization = Organization.create!(
+      name: 'Meteo Tech', description: 'Meteorological Services Company'
+    )
+
+    organization_admin_user = AdminUser.create!(
+      email: 'organization.admin@caelus.com',
+      password: 'qwerty',
+      password_confirmation: 'qwerty'
+    )
+
+    organization_admin_user.grant(:organization_admin, organization)
+  end
 end
