@@ -9,7 +9,7 @@ ActiveAdmin.setup do |config|
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
-  # config.site_title_link = "/"
+  config.site_title_link = '/admin'
 
   # Set an optional image to be displayed for the header
   # instead of a string (overrides :site_title)
@@ -80,6 +80,7 @@ ActiveAdmin.setup do |config|
   # ensure that there is a user with proper rights. You can use
   # CanCanAdapter or make your own. Please refer to documentation.
   # config.authorization_adapter = ActiveAdmin::CanCanAdapter
+  config.authorization_adapter = ActiveAdmin::PunditAdapter
 
   # In case you prefer Pundit over other solutions you can here pass
   # the name of default policy class. This policy will be used in every
@@ -90,6 +91,9 @@ ActiveAdmin.setup do |config|
   # resources, you may set a namespace here that Pundit will search
   # within when looking for a resource's policy.
   # config.pundit_policy_namespace = :admin
+
+  config.pundit_default_policy = 'ActiveAdmin::AdminPolicy'
+  config.pundit_policy_namespace = :active_admin
 
   # You can customize your CanCan Ability class name here.
   # config.cancan_ability_class = "Ability"
@@ -127,6 +131,7 @@ ActiveAdmin.setup do |config|
   #
   # Default:
   # config.logout_link_method = :get
+  config.logout_link_method = :delete
 
   # == Root
   #
@@ -142,7 +147,9 @@ ActiveAdmin.setup do |config|
   #
   # You can completely disable comments:
   # config.comments = false
-  #
+
+  config.comments = false
+
   # You can change the name under which comments are registered:
   # config.comments_registration_name = 'AdminComment'
   #
@@ -246,7 +253,7 @@ ActiveAdmin.setup do |config|
   # You can add a navigation menu to be used in your application, or configure a provided menu
   #
   # To change the default utility navigation to show a link to your website & a logout btn
-  #
+
   #   config.namespace :admin do |admin|
   #     admin.build_menu :utility_navigation do |menu|
   #       menu.add label: "My Great Website", url: "http://www.mygreatwebsite.com", html_options: { target: :blank }
@@ -262,6 +269,21 @@ ActiveAdmin.setup do |config|
   #     end
   #   end
 
+  config.namespace :admin do |admin|
+    admin.build_menu :utility_navigation do |menu|
+      admin.add_logout_button_to_menu menu
+    end
+  end
+
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add label: 'System configuration' do |submenu|
+        submenu.add label: 'Sidekiq API', url: '/sidekiq', priority: 4, html_options: { target: :blank }
+        submenu.add label: 'rSwag API Documentation', url: '/admin/api-docs', priority: 5, html_options: { target: :blank }
+      end
+    end
+  end
+
   # == Download Links
   #
   # You can disable download links on resource listing pages,
@@ -269,19 +291,17 @@ ActiveAdmin.setup do |config|
   #
   # To disable/customize for the :admin namespace:
   #
-  #   config.namespace :admin do |admin|
-  #
-  #     # Disable the links entirely
-  #     admin.download_links = false
-  #
-  #     # Only show XML & PDF options
-  #     admin.download_links = [:xml, :pdf]
-  #
-  #     # Enable/disable the links based on block
-  #     #   (for example, with cancan)
-  #     admin.download_links = proc { can?(:view_download_links) }
-  #
-  #   end
+    config.namespace :admin do |admin|
+      # Disable the links entirely
+      admin.download_links = false
+
+      # # Only show XML & PDF options
+      # admin.download_links = [:xml, :pdf]
+
+      # # Enable/disable the links based on block
+      # #   (for example, with cancan)
+      # admin.download_links = proc { can?(:view_download_links) }
+    end
 
   # == Pagination
   #
