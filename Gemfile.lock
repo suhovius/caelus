@@ -162,6 +162,12 @@ GEM
     factory_bot_rails (6.4.3)
       factory_bot (~> 6.4)
       railties (>= 5.0.0)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.1.0)
+      net-http
     ffaker (2.23.0)
     ffi (1.16.3)
     formtastic (5.0.0)
@@ -176,6 +182,7 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
     hashdiff (1.1.0)
+    hashie (5.0.0)
     i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -229,7 +236,10 @@ GEM
     mini_mime (1.1.5)
     minitest (5.22.3)
     msgpack (1.7.2)
+    multipart-post (2.4.0)
     mutex_m (0.2.0)
+    net-http (0.4.1)
+      uri
     net-imap (0.4.10)
       date
       net-protocol
@@ -252,6 +262,11 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.4-x86_64-linux)
       racc (~> 1.4)
+    open-weather-ruby-client (0.4.0)
+      activesupport
+      faraday (>= 2.0.1)
+      faraday-multipart
+      hashie
     orm_adapter (0.5.0)
     parallel (1.24.0)
     parser (3.3.1.0)
@@ -437,6 +452,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
     uniform_notifier (1.16.0)
+    uri (0.13.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -479,6 +495,7 @@ DEPENDENCIES
   factory_bot_rails (~> 6.4, >= 6.4.3)
   ffaker (~> 2.23)
   importmap-rails
+  open-weather-ruby-client (~> 0.4.0)
   pg (~> 1.1)
   pry-byebug
   puma (>= 5.0)
