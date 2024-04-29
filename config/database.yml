@@ -24,8 +24,6 @@ default: &default
   port: <%= ENV['DATABASE_PORT'] || '5432' %>
   host: <%= ENV['DATABASE_HOST'] || '127.0.0.1' %>
 
-  # url: postgresql://postgres:dev-password@localhost:5435
-
 development:
   <<: *default
   database: caelus_development
@@ -85,7 +83,4 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: caelus_production
-  username: caelus
-  password: <%= ENV["CAELUS_DATABASE_PASSWORD"] %>
+  url: <%= ENV.fetch('DATABASE_URL') %>

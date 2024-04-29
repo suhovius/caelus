@@ -11,9 +11,10 @@ module Observations
 
     validates :latitude, :longitude, presence: :true
 
-    attr_accessor :origin_type_and_id # INFO: This is needed for hack in active_admin
-
     scope :weather_api_credentials, ->{ where(origin_type: 'WeatherApiCredential') }
+
+
+    attr_accessor :origin_type_and_id # INFO: This is needed for hack in active_admin
 
     def origin_type_and_id
       @origin_type_and_id || [self.origin_type, self.origin_id].compact.join('-')
