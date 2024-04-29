@@ -1,0 +1,15 @@
+:concurrency: 5
+staging:
+  :concurrency: 10
+production:
+  :concurrency: 10
+:queues:
+  - default
+  - weather_sync
+
+:scheduler:
+  :schedule:
+    weather_scheduler_job:
+      # cron: '0 * * * * *' # Runs once per minute # Used for testing
+      cron: '0 0 * * * *' # Runs every hour
+      class: Weather::SchedulerJob

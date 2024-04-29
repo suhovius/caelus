@@ -41,6 +41,8 @@ module Caelus
 
     config.application_title = ENV.fetch('APPLICATION_TITLE')
 
+    config.redis_url = ENV.fetch('REDIS_URL', 'redis://localhost:6379/0')
+
     config.active_record.encryption.primary_key = ENV['ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY']
     config.active_record.encryption.deterministic_key = ENV['ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY']
     config.active_record.encryption.key_derivation_salt = ENV['ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT']
