@@ -12,6 +12,7 @@ services:
       ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY:
       ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT:
       SECRET_KEY_BASE_DUMMY: 1
+      SUPER_ADMIN_PASSWORD: ${SUPER_ADMIN_PASSWORD}
     ports:
       - "3000:3000"
     expose:
@@ -41,7 +42,6 @@ services:
       - "5435"
     environment:
       POSTGRES_USER: postgres
-      # POSTGRES_PASSWORD:
       POSTGRES_HOST_AUTH_METHOD: trust
 
   redis:
