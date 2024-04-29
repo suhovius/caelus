@@ -1,6 +1,11 @@
 class WeatherApiCredential < ApplicationRecord
   belongs_to :organization
 
+  has_many :observations_sources,
+           as: :origin,
+           class_name: 'Observations::Source',
+           dependent: :destroy
+
   encrypts :api_key
 
   validates :api_key, presence: true

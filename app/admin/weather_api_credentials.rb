@@ -39,5 +39,4 @@ ActiveAdmin.register WeatherApiCredential do
 
     f.actions
   end
-  
 end

@@ -51,6 +51,7 @@ ActiveAdmin.register Organization do
   sidebar 'Manage Tools', only: [:show, :edit], if: can_manage_resource do
     ul do
       li link_to 'Weather API Credentials', admin_organization_weather_api_credentials_path(resource)
+      li link_to 'Observations Sources', admin_organization_observations_sources_path(resource)
     end
   end
 
