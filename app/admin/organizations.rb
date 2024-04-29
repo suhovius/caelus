@@ -48,6 +48,12 @@ ActiveAdmin.register Organization do
     end
   end
 
+  sidebar 'Manage Tools', only: [:show, :edit], if: can_manage_resource do
+    ul do
+      li link_to 'Weather API Credentials', admin_organization_weather_api_credentials_path(resource)
+    end
+  end
+
   controller do
     def index
       unless current_admin_user.has_role? :system_admin

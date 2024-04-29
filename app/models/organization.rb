@@ -3,6 +3,8 @@ class Organization < ApplicationRecord
   validates :name, presence: true, uniqueness: true, length: { maximum: 80 }
   validates :description, length: { maximum: 500 }
 
+  has_many :weather_api_credentials, dependent: :destroy
+
   def assigned_admins
     admins = admin_roles.where(name: :organization_admin).first&.admin_users
     admins || AdminUser.none

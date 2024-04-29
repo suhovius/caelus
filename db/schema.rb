@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_28_202627) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_29_022558) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,4 +65,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_28_202627) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "weather_api_credentials", force: :cascade do |t|
+    t.bigint "organization_id", null: false
+    t.string "name", null: false
+    t.string "handler_key", null: false
+    t.string "api_key", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "organization_id"], name: "index_weather_api_credentials_on_name_and_organization_id", unique: true
+    t.index ["organization_id"], name: "index_weather_api_credentials_on_organization_id"
+  end
+
+  add_foreign_key "weather_api_credentials", "organizations"
 end
