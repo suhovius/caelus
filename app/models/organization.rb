@@ -8,6 +8,10 @@ class Organization < ApplicationRecord
            class_name: 'Observations::Source',
            dependent: :destroy
 
+  has_many :observations_results,
+           class_name: 'Observations::Result',
+           dependent: :destroy
+
   def assigned_admins
     admins = admin_roles.where(name: :organization_admin).first&.admin_users
     admins || AdminUser.none

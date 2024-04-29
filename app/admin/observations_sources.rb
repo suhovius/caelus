@@ -1,4 +1,4 @@
-ActiveAdmin.register Observations::Source do
+ActiveAdmin.register Observations::Source, as: 'ObservationsSource' do
   belongs_to :organization
 
   menu false

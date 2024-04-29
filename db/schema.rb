@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_29_030350) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_29_041438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_030350) do
     t.index ["admin_user_id"], name: "index_admin_users_admin_roles_on_admin_user_id"
   end
 
+  create_table "observations_results", force: :cascade do |t|
+    t.bigint "source_id", null: false
+    t.float "temperature", null: false
+    t.float "pressure", null: false
+    t.float "humidity", null: false
+    t.float "wind_speed", null: false
+    t.float "wind_deg", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_id"], name: "index_observations_results_on_source_id"
+  end
+
   create_table "observations_sources", force: :cascade do |t|
     t.bigint "organization_id", null: false
     t.string "origin_type", null: false
@@ -91,6 +103,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_030350) do
     t.index ["organization_id"], name: "index_weather_api_credentials_on_organization_id"
   end
 
+  add_foreign_key "observations_results", "observations_sources", column: "source_id"
   add_foreign_key "observations_sources", "organizations"
   add_foreign_key "weather_api_credentials", "organizations"
 end
