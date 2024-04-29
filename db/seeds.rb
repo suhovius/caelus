@@ -12,7 +12,7 @@ if Rails.env.development?
       password_confirmation: 'qwerty'
     )
 
-    admin_user.add_role(:system_admin)
+    admin_user.add_role(:super_admin)
   end
 
   unless Organization.exists?(name: 'Meteo Tech')

@@ -277,11 +277,11 @@ ActiveAdmin.setup do |config|
 
   config.namespace :admin do |admin|
     admin.build_menu do |menu|
-      menu.add label: 'System configuration' do |submenu|
+      menu.add label: 'Settings' do |submenu|
         submenu.add label: 'Sidekiq API', url: '/sidekiq', priority: 4, html_options: { target: :blank },
-                    if: -> { current_admin_user.has_cached_role?(:system_admin) }
+                    if: -> { current_admin_user.has_cached_role?(:super_admin) }
         submenu.add label: 'rSwag API Documentation', url: '/admin/api-docs', priority: 5, html_options: { target: :blank },
-                    if: -> { current_admin_user.has_cached_role?(:system_admin) }
+                    if: -> { current_admin_user.has_cached_role?(:super_admin) }
       end
     end
   end

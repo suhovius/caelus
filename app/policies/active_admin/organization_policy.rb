@@ -1,24 +1,20 @@
 module ActiveAdmin
   class OrganizationPolicy < AdminPolicy
-    organization_actions = [:update]
-
-    organization_actions.each do |action_name|
-      define_method("#{action_name}?") do
-        is_system_admin? || is_organization_admin?(record)
-      end
+    def update?
+      is_super_admin? || is_organization_admin?(record)
     end
 
     def index?
-      is_system_admin? || is_organization_admin?
+      is_super_admin? || is_organization_admin?
     end
 
     def show?
-      is_system_admin? ||
+      is_super_admin? ||
         is_organization_admin?(record)
     end
 
     def assign_organization_admin?
-      is_system_admin?
+      is_super_admin?
     end
 
     class Scope < AdminPolicy::Scope

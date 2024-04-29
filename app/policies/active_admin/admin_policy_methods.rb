@@ -1,7 +1,7 @@
 module ActiveAdmin
-  module AdminPolicyHelpers
-    def is_system_admin?
-      admin_user.has_cached_role?(:system_admin)
+  module AdminPolicyMethods
+    def is_super_admin?
+      admin_user.has_cached_role?(:super_admin)
     end
 
     def is_organization_admin?(organization = :any)

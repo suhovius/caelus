@@ -1,19 +1,14 @@
 module ActiveAdmin
-  module OrganizationAdminFullAccess
-    # For records that have organization_id and accessible to org admins
-
-    collection_actions = [:create, :index].freeze
-    record_actions = [:show, :update, :destroy].freeze
-
-    collection_actions.each do |action|
+  module FullAccessForOrganizationAdmin
+    %i[create index].each do |action|
       define_method("#{action}?") do
-        is_system_admin? || is_organization_admin?
+        is_super_admin? || is_organization_admin?
       end
     end
 
-    record_actions.each do |action|
+    %i[show update destroy].each do |action|
       define_method("#{action}?") do
-        is_system_admin? || (
+        is_super_admin? || (
           is_organization_admin? && admin_user.assigned_organization_ids.include?(record.organization_id)
         )
       end

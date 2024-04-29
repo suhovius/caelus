@@ -12,18 +12,18 @@ class AdminUser < ApplicationRecord
   scope :resource_type, ->(type) { joins(:roles).where('admin_roles.resource_type = ?', type) }
 
   def organization_access?(organization)
-    has_cached_role?(:organization_admin, organization) || has_cached_role?(:system_admin)
+    has_cached_role?(:organization_admin, organization) || has_cached_role?(:super_admin)
   end
 
   def admin?
     has_any_role?(
-      :system_admin,
+      :super_admin,
       name: :organization_admin,
       resource: :any
     )
   end
 
   def organization_access?(organization)
-    has_cached_role?(:organization_admin, organization) || has_cached_role?(:system_admin)
+    has_cached_role?(:organization_admin, organization) || has_cached_role?(:super_admin)
   end
 end

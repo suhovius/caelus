@@ -1,7 +1,7 @@
 module ActiveAdmin
   class AdminUserPolicy < AdminPolicy
     def index?
-      is_system_admin? || is_organization_admin?
+      is_super_admin? || is_organization_admin?
     end
 
     def create?
@@ -9,16 +9,16 @@ module ActiveAdmin
     end
 
     def create_organization_admin?
-      is_system_admin? || is_organization_admin?
+      is_super_admin? || is_organization_admin?
     end
 
     def assign?
-      is_system_admin?
+      is_super_admin?
     end
 
-    [:show, :update, :revoke_access].each do |action|
+    %i[show update withdraw_access].each do |action|
       define_method("#{action}?") do
-        if is_system_admin?
+        if is_super_admin?
           true
         elsif is_organization_admin?
           record.roles.where(

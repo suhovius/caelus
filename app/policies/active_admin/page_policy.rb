@@ -1,9 +1,7 @@
 module ActiveAdmin
   class PagePolicy < AdminPolicy
-    # can :read, ActiveAdmin::Page, name: 'Dashboard'
-
     def show?
-      return true if is_system_admin?
+      return true if is_super_admin?
 
       case record.name
       when 'Dashboard'

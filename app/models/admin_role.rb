@@ -1,5 +1,5 @@
 class AdminRole < ApplicationRecord
-  ALLOWED_ROLES = %w[system_admin organization_admin].freeze
+  ALLOWED_ROLES = %w[super_admin organization_admin].freeze
 
   has_and_belongs_to_many :admin_users, join_table: :admin_users_admin_roles
   
@@ -18,7 +18,7 @@ class AdminRole < ApplicationRecord
             allow_nil: false
 
   validate do
-    check_assigned_organization if organization_admin?
+    organization_presence_check if organization_admin?
   end
 
   scopify
@@ -29,7 +29,7 @@ class AdminRole < ApplicationRecord
     name == 'organization_admin'
   end
 
-  def check_assigned_organization
+  def organization_presence_check
     return if resource.is_a?(Organization) && resource_id
     errors[:organization] << 'can\'t be blank'
   end

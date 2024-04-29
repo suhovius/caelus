@@ -1,5 +1,5 @@
 module ActiveAdmin
   class WeatherApiCredentialPolicy < AdminPolicy
-    include OrganizationAdminFullAccess
+    include FullAccessForOrganizationAdmin
   end
 end

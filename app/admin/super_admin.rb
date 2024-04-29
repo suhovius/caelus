@@ -1,8 +1,8 @@
-ActiveAdmin.register AdminUser, as: 'SystemAdmin' do
-  menu label: 'System admins',
-    parent: 'System configuration',
+ActiveAdmin.register AdminUser, as: 'SuperAdmin' do
+  menu label: 'Super admins',
+    parent: 'Settings',
     priority: 2,
-    if: -> { current_admin_user.has_cached_role?(:system_admin) }
+    if: -> { current_admin_user.has_cached_role?(:super_admin) }
 
   config.batch_actions = false
   config.filters = false
@@ -10,23 +10,23 @@ ActiveAdmin.register AdminUser, as: 'SystemAdmin' do
   actions :all, except: :destroy
   permit_params :email, :password
 
-  action_item :revoke_access, only: [:edit, :show] do
+  action_item :withdraw_access, only: [:edit, :show] do
     link_to(
-      'Revoke access',
-      revoke_access_admin_system_admin_path(resource),
+      'Withdraw access',
+      withdraw_access_admin_super_admin_path(resource),
       method: :put
     )
   end
 
-  member_action :revoke_access, method: :put do
+  member_action :withdraw_access, method: :put do
     if current_admin_user == resource
-      redirect_back fallback_location: admin_system_admin_path,
-                    error: 'You can\'t perform this action'
+      redirect_back fallback_location: admin_super_admin_path,
+                    error: 'This action is not allowed'
     else
-      resource.revoke :system_admin
+      resource.revoke(:super_admin)
       resource.destroy unless resource.admin?
-      redirect_to admin_system_admins_path,
-                  notice: 'Access has been revoked'
+      redirect_to admin_super_admins_path,
+                  notice: 'Access has been withdrawn successfully'
     end
   end
 
@@ -59,20 +59,20 @@ ActiveAdmin.register AdminUser, as: 'SystemAdmin' do
   end
 
   controller do
-    after_action :grant_system_access, only: [:create]
+    after_action :assign_super_access, only: [:create]
 
     def scoped_collection
-      end_of_association_chain.with_role(:system_admin).preload(:roles)
+      end_of_association_chain.with_role(:super_admin).preload(:roles)
     end
 
     private
 
     def authorized?(_action, _subject = nil)
-      current_admin_user.has_role? :system_admin
+      current_admin_user.has_role?(:super_admin)
     end
 
-    def grant_system_access
-      resource&.grant :system_admin
+    def assign_super_access
+      resource&.grant(:super_admin)
     end
   end
 end

@@ -1,7 +1,7 @@
 module ActiveAdmin
   module Observations
     class SourcePolicy < AdminPolicy
-      include OrganizationAdminFullAccess
+      include FullAccessForOrganizationAdmin
     end
   end
 end

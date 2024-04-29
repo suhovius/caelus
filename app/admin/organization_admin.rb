@@ -13,10 +13,10 @@ ActiveAdmin.register AdminUser, as: 'OrganizationAdmin' do
   actions :all, except: :destroy
   permit_params :email, :password
 
-  action_item :revoke_access, only: [:edit, :show] do
+  action_item :withdraw_access, only: [:edit, :show] do
     link_to(
-      'Unassign',
-      revoke_access_admin_organization_organization_admin_path(
+      'Withdraw',
+      withdraw_access_admin_organization_organization_admin_path(
         organization,
         resource
       ),
@@ -27,25 +27,25 @@ ActiveAdmin.register AdminUser, as: 'OrganizationAdmin' do
   action_item(
     :assign_admin,
     only: :index,
-    if: proc { current_admin_user.has_role?(:system_admin) }
+    if: proc { current_admin_user.has_role?(:super_admin) }
   ) do
     link_to 'Assign Admin', admin_organization_assign_admins_path(organization)
   end
 
-  member_action :revoke_access, method: :put do
+  member_action :withdraw_access, method: :put do
     if current_admin_user == resource
-      redirect_back fallback_location: admin_system_admin_path,
-                    alert: 'You can\'t perform this action'
+      redirect_back fallback_location: admin_super_admin_path,
+                    alert: 'This action is not allowed'
     else
-      resource.revoke :organization_admin, parent
+      resource.revoke(:organization_admin, parent)
       resource.destroy unless resource.admin?
       redirect_to admin_organization_organization_admins_path(parent),
-                  notice: 'Access has been revoked'
+                  notice: 'Access has been withdrawn successfully'
     end
   end
 
   form do |f|
-    f.inputs 'Admin Details' do
+    f.inputs 'Admin User' do
       f.input :email
       f.input :password
     end
@@ -82,7 +82,7 @@ ActiveAdmin.register AdminUser, as: 'OrganizationAdmin' do
     private
 
     def grant_organization_access
-      resource&.grant :organization_admin, parent
+      resource&.grant(:organization_admin, parent)
     end
   end
 end
