@@ -30,7 +30,7 @@ if Rails.env.development? || Rails.env.production?
 
     unless credential
       credential =
-        organization.weather_api_credentials.create(
+        organization.weather_api_credentials.create!(
           name: handler_key.camelize,
           handler_key:,
           # This is needed for testing purposes.
@@ -62,8 +62,21 @@ if Rails.env.development? || Rails.env.production?
 
         unless source
           source = organization.observations_sources.create!(
-            location.slice(:latitude, :longitude, :description).merge(name: source_name)
+            location.slice(:latitude, :longitude, :description).merge(
+              name: source_name,
+              origin: credential
+            )
           )
+        end
+
+        results = [
+          { temperature: 7.5, pressure: 1014.0, humidity: 88.0, wind_speed: 11.3, wind_deg: 203.0 },
+          { temperature: 6.75, pressure: 1014.0, humidity: 90.0, wind_speed: 2.68, wind_deg: 239.0 },
+          { temperature: 19.0, pressure: 1016.6, humidity: 79.0, wind_speed: 0.9, wind_deg: 270.0 }
+        ]
+
+        results.each do |result|
+          source.observations_results.create!(result)
         end
       end
     end
