@@ -68,9 +68,7 @@ if Rails.env.development? || Rails.env.production?
         }
       ]
 
-    locations.each do |location|
-        source_name = [handler_key.camelize, location[:city], 'Source'].join(' ')
-
+      locations.each do |location|
         source = organization.weather_api_credentials.find_by(name: source_name)
 
         unless source
