@@ -15,8 +15,13 @@ ActiveAdmin.register Observations::Source, as: 'ObservationsSource' do
 
       # TODO: Update this condition when WeatherDevice entity will be added as source
       # for the weather data
-      if origin_type == 'WeatherApiCredential'
+      case origin_type
+      when 'WeatherApiCredential'
         if parent.weather_api_credentials.exists?(id: origin_id)
+          permitted += [:origin_type_and_id]
+        end
+      when 'WeatherDevice'
+        if parent.weather_devices.exists?(id: origin_id)
           permitted += [:origin_type_and_id]
         end
       end
@@ -26,8 +31,8 @@ ActiveAdmin.register Observations::Source, as: 'ObservationsSource' do
   end
 
   index do
-    column :name do |credential|
-      link_to credential.name, admin_organization_observations_source_path(organization, credential)
+    column :name do |source|
+      link_to source.name, admin_organization_observations_source_path(organization, source)
     end
 
     column :description
@@ -35,18 +40,18 @@ ActiveAdmin.register Observations::Source, as: 'ObservationsSource' do
     column :latitude
     column :longitude
 
-    column :google_maps_link do |credential|
-      link_to('Open at Google Maps', credential.decorate.google_maps_link, target: '_blank')
+    column :google_maps_link do |source|
+      link_to('Open at Google Maps', source.decorate.google_maps_link, target: '_blank')
     end
 
     column :created_at
     column :updated_at
   end
 
-  show do |credential|
+  show do |source|
     attributes_table do
-      row :name do |credential|
-        link_to credential.name, admin_organization_observations_source_path(organization, credential)
+      row :name do |source|
+        link_to source.name, admin_organization_observations_source_path(organization, source)
       end
 
       row :description
@@ -55,7 +60,7 @@ ActiveAdmin.register Observations::Source, as: 'ObservationsSource' do
       row :longitude
 
       row :google_maps_link do
-        link_to('Open at Google Maps', credential.decorate.google_maps_link, target: '_blank')
+        link_to('Open at Google Maps', source.decorate.google_maps_link, target: '_blank')
       end
 
       row :created_at

@@ -19,7 +19,7 @@ module Observations
               numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }
 
     scope :weather_api_credentials, ->{ where(origin_type: 'WeatherApiCredential') }
-
+    scope :weather_devices, ->{ where(origin_type: 'WeatherDevice') }
 
     attr_accessor :origin_type_and_id # INFO: This is needed for hack in active_admin
 

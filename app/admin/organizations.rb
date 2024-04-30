@@ -47,6 +47,7 @@ ActiveAdmin.register Organization do
     ul do
       li link_to 'Organization Admins', admin_organization_organization_admins_path(resource)
       li link_to 'Weather API Credentials', admin_organization_weather_api_credentials_path(resource)
+      li link_to 'Weather Devices', admin_organization_weather_devices_path(resource)
       li link_to 'Observations Sources', admin_organization_observations_sources_path(resource)
       # TODO: Add organization_id filter to observations results and use it here as a parameter
       # li link_to 'Observations Results', admin_organization_observations_results_path(resource)

@@ -4,6 +4,7 @@ class Organization < ApplicationRecord
   validates :description, length: { maximum: 500 }
 
   has_many :weather_api_credentials, dependent: :destroy
+  has_many :weather_devices, dependent: :destroy
   has_many :observations_sources,
            class_name: 'Observations::Source',
            dependent: :destroy

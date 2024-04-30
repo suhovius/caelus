@@ -14,6 +14,8 @@ ActiveAdmin.register_page 'Dashboard' do
       end
     end
 
+    # TODO: Add some weather graphs by different allowed to current role sources!
+
     # Here is an example of a simple dashboard with columns and panels.
     #
     # columns do

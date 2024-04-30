@@ -5,15 +5,6 @@ ActiveAdmin.register WeatherApiCredential do
 
   config.batch_actions = false
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :organization_id, :name, :handler_key, :api_key
-  #
-  # or
-  #
   permit_params :name, :handler_key, :api_key
 
   index do
@@ -24,6 +15,19 @@ ActiveAdmin.register WeatherApiCredential do
     column :handler_key
     column :created_at
     column :updated_at
+  end
+
+  show do |credential|
+    attributes_table do
+      row :name do |credential|
+        link_to credential.name, admin_organization_weather_api_credential_path(organization, credential)
+      end
+
+      row :api_key
+      row :handler_key
+      row :created_at
+      row :updated_at
+    end
   end
 
   form do |f|

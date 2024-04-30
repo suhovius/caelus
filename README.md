@@ -97,7 +97,11 @@ services:
 
 - Use postgis for Observations::Source latitude, longitude handling, that will improve the data integrity and can open way for further interesting features to work with coordinates tracking for example if this data comes from the mobile weather devices like Meteorological Ballons for example
 
+- Use `uuid-ossp` postgres extension for the native support of the UUID values (skipped to avoid issues at heroku deployment)
+
 - Add `Observations::Group` entity that might group some `Observations::Sources` into specific sets of weather sources to process them as close entities for some specific experiment for example
+
+- API to fetch config data by WeatherDevice that device might ask form the backend server
 
 - More weather apis integration and different data collection/processing.
 
@@ -112,6 +116,8 @@ services:
 - Some more complex analytics for the received weather data and some forecasting with AI or some algorithms based on the fetched data
 
 - CI and Deployments
+
+- Improve test coverage. At least add more Unit tests and api tests
 
 - Sentry error monitoring
 
