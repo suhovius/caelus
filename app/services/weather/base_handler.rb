@@ -1,7 +1,5 @@
 module Weather
   class BaseHandler
-    class InvalidData < StandardError; end
-
     def initialize(api_key:)
       @api_key = api_key
       @api_client = initialize_api_client
@@ -18,7 +16,7 @@ module Weather
     end
 
     def process_response_contract(contract)
-      raise InvalidData.new(contract.errors.to_h) if contract.failure?
+      raise ::Errors::InvalidData.new(contract.errors.to_h) if contract.failure?
 
       contract
     end

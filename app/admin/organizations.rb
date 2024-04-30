@@ -53,4 +53,18 @@ ActiveAdmin.register Organization do
       # li link_to 'Observations Results', admin_organization_observations_results_path(resource)
     end
   end
+
+  controller do
+    def index
+      unless current_admin_user.has_role?(:super_admin)
+        if current_admin_user.assigned_organizations.count == 1
+          redirect_to(
+            admin_organization_path(current_admin_user.assigned_organizations.first)
+          ) and return
+        end
+      end
+
+      super
+    end
+  end
 end

@@ -35,6 +35,15 @@ ActiveAdmin.register Observations::Source, as: 'ObservationsSource' do
       link_to source.name, admin_organization_observations_source_path(organization, source)
     end
 
+    column :origin do |source|
+      case source.origin.class.name
+      when 'WeatherApiCredential'
+        link_to source.origin.name, admin_organization_weather_api_credential_path(organization, source.origin)
+      when 'WeatherDevice'
+        link_to source.origin.name, admin_organization_weather_device_path(organization, source.origin)
+      end
+    end
+
     column :description
 
     column :latitude
@@ -52,6 +61,15 @@ ActiveAdmin.register Observations::Source, as: 'ObservationsSource' do
     attributes_table do
       row :name do |source|
         link_to source.name, admin_organization_observations_source_path(organization, source)
+      end
+
+      row :origin do
+        case source.origin.class.name
+        when 'WeatherApiCredential'
+          link_to source.origin.name, admin_organization_weather_api_credential_path(organization, source.origin)
+        when 'WeatherDevice'
+          link_to source.origin.name, admin_organization_weather_device_path(organization, source.origin)
+        end
       end
 
       row :description
@@ -75,7 +93,7 @@ ActiveAdmin.register Observations::Source, as: 'ObservationsSource' do
       f.input :description
       f.input :origin_type_and_id,
               as: :select,
-              collection: organization.weather_api_credentials.map { |item| [item.name, [item.class.name, item.id].join('-')] },
+              collection: (organization.weather_api_credentials + organization.weather_devices).map { |item| [item.name, [item.class.name, item.id].join('-')] },
               label: 'Origin',
               selected: f.object.origin_type_and_id
 

@@ -24,6 +24,7 @@ ActiveAdmin.register WeatherDevice do
         link_to device.name, admin_organization_weather_device_path(organization, device)
       end
       row :uuid
+      row :token
       row :description
       row :created_at
       row :updated_at
