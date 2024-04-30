@@ -1,0 +1,84 @@
+---
+openapi: 3.0.1
+info:
+  title: Caelus Api Documentation
+  version: v1
+components:
+  securitySchemes:
+    http_token_auth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Enter your token in the format 'Token token=your_token_value'
+    basic_auth:
+      type: http
+      scheme: basic
+    background_uploads_token_auth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: |-
+        Long-living token for making request after default token expiration.
+                                  Enter your token in the format 'Token token=your_token_value'
+paths:
+  "/weather_devices/{uuid}/api/observation_results":
+    post:
+      summary: Create new observation result
+      tags:
+      - Weather Devices
+      description: Endpoint that allows weather devices to submit their data
+      security:
+      - http_token_auth: []
+      parameters:
+      - name: uuid
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '204':
+          description: Succesfull data saving
+        '422':
+          description: Error response
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: Error response
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                temperature:
+                  type: float
+                pressure:
+                  type: float
+                humidity:
+                  type: float
+                wind_speed:
+                  type: float
+                wind_deg:
+                  type: float
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                temperature:
+                  type: float
+                pressure:
+                  type: float
+                humidity:
+                  type: float
+                wind_speed:
+                  type: float
+                wind_deg:
+                  type: float

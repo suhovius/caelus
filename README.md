@@ -140,7 +140,10 @@ curl -v -H "Content-Type: application/json" -H 'Authorization: Token token=ca633
 
 ### How to run tests
 
-- TBD
+- Run specs with `bundle exec rspec` command
+
+### Generate / Update rSwag API documentation
+- Generate the Swagger JSON file(s) `rake rswag:specs:swaggerize`. Read more here https://github.com/rswag/rswag
 
 ### Future improvements and ideas
 
