@@ -7,6 +7,8 @@ module WeatherDevices
 
       rescue_from Errors::InvalidData, with: :render_invalid_data_error
 
+      rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found_error
+
       private
 
       def current_device
@@ -25,6 +27,10 @@ module WeatherDevices
         end
 
         render status: 422, json: { error: , messages:  }
+      end
+
+      def render_record_not_found_error(error)
+        render status: 404, json: { error: 'Not Found' }
       end
     end
   end

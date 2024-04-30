@@ -87,6 +87,57 @@ services:
 
 - After Weather APIs are properly configured project's background processing current weather data fetching job `Weather::SchedulerJob`, that runs every hour, would finally be able to fetch some data and save it into the database via `Observations::Result` model
 
+### Weather Devices APIs Calls Examples
+
+#### Submit valid data
+
+```
+curl -v -H "Content-Type: application/json" -H 'Authorization: Token token=ca63308bc71198be9061fa66ee9cab5e' http://localhost:3000/weather_devices/f8c6ac85-4ee9-4ca9-838c-9df83843e24a/api/observation_results -X POST -d '{ "temperature": 19.0, "pressure": 1016.6, "humidity": 79.0, "wind_speed": 0.9, "wind_deg": 270.0 }'
+
+HTTP/1.1 204 No Content
+
+```
+
+#### Submit invalid data
+
+```
+curl -v -H "Content-Type: application/json" -H 'Authorization: Token token=ca63308bc71198be9061fa66ee9cab5e' http://localhost:3000/weather_devices/f8c6ac85-4ee9-4ca9-838c-9df83843e24a/api/observation_results -X POST -d '{ "temperature": 19.0, "pressure": 1016.6, "humidity": 79.0, "wind_speed": null, "wind_deg": null }'
+
+< HTTP/1.1 422 Unprocessable Content
+
+{
+  "error": "Invalid data",
+  "messages": [
+    {
+      "wind_speed": "must be a float"
+    },
+    {
+      "wind_deg": "must be a float"
+    }
+  ]
+}
+
+```
+
+#### Invalid token
+
+```
+curl -v -H "Content-Type: application/json" -H 'Authorization: Token token=Wrong-Token-ca63308bc71198be9061fa66ee9cab5e' http://localhost:3000/weather_devices/f8c6ac85-4ee9-4ca9-838c-9df83843e24a/api/observation_results -X POST -d '{ "temperature": 19.0, "pressure": 1016.6, "humidity": 79.0, "wind_speed": null, "wind_deg": null }' | jsonpp
+
+HTTP/1.1 401 Unauthorized
+
+```
+
+#### UUID Not Found
+
+```
+curl -v -H "Content-Type: application/json" -H 'Authorization: Token token=ca63308bc71198be9061fa66ee9cab5e' http://localhost:3000/weather_devices/f8c6ac85-4ee9-4ca9-838c-9df83843e25a/api/observation_results -X POST -d '{ "temperature": 19.0, "pressure": 1016.6, "humidity": 79.0, "wind_speed": null, "wind_deg": null }'
+
+< HTTP/1.1 404 Not Found
+{"error":"Not Found"}
+
+```
+
 ### How to run tests
 
 - TBD
