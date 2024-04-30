@@ -38,4 +38,14 @@ class AdminUser < ApplicationRecord
       )
     end
   end
+
+  def accessible_observation_sources
+    if has_cached_role?(:super_admin)
+      Observations::Source.all
+    else
+      Observations::Source.where(
+        organization_id: assigned_organizations.pluck(:id)
+      )
+    end
+  end
 end

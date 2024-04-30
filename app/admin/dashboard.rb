@@ -25,32 +25,23 @@ ActiveAdmin.register_page 'Dashboard' do
 
     columns do
       column do
-        panel 'Most active source data for the recent day' do
+        panel 'Weather Data changes by sources' do
+          sources = current_admin_user.accessible_observation_sources
 
+          %w[temperature pressure humidity wind_speed wind_deg].each do |attr_name|
+            panel attr_name.humanize do
+              line_chart(
+                sources.map do |source|
+                  {
+                    name: source.name,
+                    data: source.observations_results.group_by_hour(:created_at).average(attr_name)
+                  }
+                end
+              )
+            end
+          end
         end
       end
     end
-
-    # TODO: Add some weather graphs by different allowed to current role sources!
-
-    # Here is an example of a simple dashboard with columns and panels.
-    #
-    # columns do
-    #   column do
-    #     panel "Recent Posts" do
-    #       ul do
-    #         Post.recent(5).map do |post|
-    #           li link_to(post.title, admin_post_path(post))
-    #         end
-    #       end
-    #     end
-    #   end
-
-    #   column do
-    #     panel "Info" do
-    #       para "Welcome to ActiveAdmin."
-    #     end
-    #   end
-    # end
-  end # content
+  end
 end
