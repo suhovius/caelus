@@ -3,14 +3,31 @@ ActiveAdmin.register_page 'Dashboard' do
   menu priority: 1, label: proc { I18n.t('active_admin.dashboard') }
 
   content title: proc { I18n.t('active_admin.dashboard') } do
-    div class: 'blank_slate_container', id: 'dashboard_default_message' do
-      span class: 'blank_slate' do
-        span(
-          I18n.t(
-            "active_admin.dashboard_page.intro_text",
-            application_title: Rails.application.config.application_title
+    observations_results = current_admin_user.accessible_observation_results.joins(:source)
+
+    columns do
+      column do
+        panel 'Observations count by sources' do
+          pie_chart(
+            observations_results.group('observations_sources.name').count
           )
-        )
+        end
+      end
+
+      column do
+        panel 'Average temperatures by sources' do
+          column_chart(
+            observations_results.group('observations_sources.name').average(:temperature)
+          )
+        end
+      end
+    end
+
+    columns do
+      column do
+        panel 'Most active source data for the recent day' do
+
+        end
       end
     end
 
