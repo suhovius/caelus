@@ -85,6 +85,7 @@ end
 group :test do
   gem 'database_cleaner', '~> 2.0', '>= 2.0.2'
   gem 'factory_bot_rails', '~> 6.4', '>= 6.4.3'
+  gem 'faker', '~> 3.3', '>= 3.3.1'
   gem 'ffaker', '~> 2.23'
 
   gem 'rubocop-rails', '~> 2.24', '>= 2.24.1'

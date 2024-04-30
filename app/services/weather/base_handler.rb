@@ -16,7 +16,7 @@ module Weather
     end
 
     def process_response_contract(contract)
-      raise ::Errors::InvalidData.new(contract.errors.to_h) if contract.failure?
+      raise ::Errors::InvalidData.new('Invalid data', contract) if contract.failure?
 
       contract
     end

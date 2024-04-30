@@ -18,20 +18,31 @@ RSpec.configure do |config|
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
       info: {
-        title: 'API V1',
+        title: "#{ENV['APPLICATION_TITLE']} Api Documentation",
         version: 'v1'
       },
-      paths: {},
-      servers: [
-        {
-          url: 'https://{defaultHost}',
-          variables: {
-            defaultHost: {
-              default: 'www.example.com'
-            }
+      components: {
+        securitySchemes: {
+          http_token_auth: {
+            type: :apiKey,
+            in: :header,
+            name: :Authorization,
+            description: "Enter your token in the format 'Token token=your_token_value'"
+          },
+          basic_auth: {
+            type: :http,
+            scheme: :basic
+          },
+          background_uploads_token_auth: {
+            type: :apiKey,
+            in: :header,
+            name: :Authorization,
+            description: "Long-living token for making request after default token expiration.
+                          Enter your token in the format 'Token token=your_token_value'"
           }
-        }
-      ]
+        },
+        schemas: {}
+      }
     }
   }
 
