@@ -5,6 +5,7 @@ production:
   :concurrency: 10
 :queues:
   - default
+  - mailers
   - weather_sync
 
 :scheduler:
