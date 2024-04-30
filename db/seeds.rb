@@ -69,7 +69,7 @@ if Rails.env.development? || Rails.env.production?
       ]
 
       locations.each do |location|
-        source = organization.weather_api_credentials.find_by(name: source_name)
+        credential = organization.weather_api_credentials.find_by(name: source_name)
 
         unless source
           source = organization.observations_sources.create!(
