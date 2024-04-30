@@ -13,7 +13,7 @@ ActiveAdmin.register Observations::Source, as: 'ObservationsSource' do
     if origin_type_and_id.present?
       origin_type, origin_id = origin_type_and_id.split('-')
 
-      # TODO: Update this condition when Device entity will be added as source
+      # TODO: Update this condition when WeatherDevice entity will be added as source
       # for the weather data
       if origin_type == 'WeatherApiCredential'
         if parent.weather_api_credentials.exists?(id: origin_id)
@@ -32,13 +32,35 @@ ActiveAdmin.register Observations::Source, as: 'ObservationsSource' do
 
     column :description
 
-    # TODO: Consider using postgis in future for native
-    # coordinates processing and validation
     column :latitude
     column :longitude
 
+    column :google_maps_link do |credential|
+      link_to('Open at Google Maps', credential.decorate.google_maps_link, target: '_blank')
+    end
+
     column :created_at
     column :updated_at
+  end
+
+  show do |credential|
+    attributes_table do
+      row :name do |credential|
+        link_to credential.name, admin_organization_observations_source_path(organization, credential)
+      end
+
+      row :description
+
+      row :latitude
+      row :longitude
+
+      row :google_maps_link do
+        link_to('Open at Google Maps', credential.decorate.google_maps_link, target: '_blank')
+      end
+
+      row :created_at
+      row :updated_at
+    end
   end
 
   form do |f|

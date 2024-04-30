@@ -30,9 +30,12 @@ ActiveAdmin.register WeatherApiCredential do
     f.semantic_errors
     f.inputs do
       f.input :name
-      f.input :handler_key,
-              as: :select,
-              collection: ::WeatherApiCredential::HANDLER_KEYS.map { |key| [key.camelize, key] }
+
+      if f.object.new_record?
+        f.input :handler_key,
+                as: :select,
+                collection: ::WeatherApiCredential::HANDLER_KEYS.map { |key| [key.camelize, key] }
+      end
 
       f.input :api_key
     end

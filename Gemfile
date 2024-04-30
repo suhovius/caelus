@@ -41,6 +41,7 @@ gem 'tzinfo-data', platforms: %i[ windows jruby ]
 gem 'bootsnap', require: false
 
 gem 'dotenv-rails', '~> 3.1'
+gem 'draper', '~> 4.0', '>= 4.0.2'
 gem 'activeadmin', '~> 3.2'
 gem 'active_model_serializers', '~> 0.10.2'
 gem 'carrierwave', '~> 3.0', '>= 3.0.7'

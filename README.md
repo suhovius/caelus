@@ -93,9 +93,17 @@ services:
 
 ### Future improvements and ideas
 
+- Dymanic/Reconfigurable data fetching schedules, might be useful testing or for example or some other use cases, maybe to reduce amount of weather api queries etc
+
 - Use postgis for Observations::Source latitude, longitude handling, that will improve the data integrity and can open way for further interesting features to work with coordinates tracking for example if this data comes from the mobile weather devices like Meteorological Ballons for example
 
 - Add `Observations::Group` entity that might group some `Observations::Sources` into specific sets of weather sources to process them as close entities for some specific experiment for example
+
+- More weather apis integration and different data collection/processing.
+
+- Rails generator task to setup API calls wrapper class scaffold
+
+- Google Map integration at admin panel for all the coordinates data
 
 - Onboard photo image uploading as recent WeatherDevice onboard camera image that later can be shown at some page with Google Map that shows all the physical WeatherDevice source's along with virtual WeatherApiCredental sources
 
