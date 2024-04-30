@@ -122,7 +122,7 @@ curl -v -H "Content-Type: application/json" -H 'Authorization: Token token=ca633
 #### Invalid token
 
 ```
-curl -v -H "Content-Type: application/json" -H 'Authorization: Token token=Wrong-Token-ca63308bc71198be9061fa66ee9cab5e' http://localhost:3000/weather_devices/f8c6ac85-4ee9-4ca9-838c-9df83843e24a/api/observation_results -X POST -d '{ "temperature": 19.0, "pressure": 1016.6, "humidity": 79.0, "wind_speed": null, "wind_deg": null }' | jsonpp
+curl -v -H "Content-Type: application/json" -H 'Authorization: Token token=Wrong-Token-ca63308bc71198be9061fa66ee9cab5e' http://localhost:3000/weather_devices/f8c6ac85-4ee9-4ca9-838c-9df83843e24a/api/observation_results -X POST -d '{ "temperature": 19.0, "pressure": 1016.6, "humidity": 79.0, "wind_speed": null, "wind_deg": null }'
 
 HTTP/1.1 401 Unauthorized
 

@@ -71,8 +71,62 @@ RSpec.describe 'Weather Devices / Api / Observation Results ', type: :request do
         end
       end
 
-      context '204 success' do
+      context '204 Success' do
         it_behaves_like 'success response', context_description: self.description
+      end
+
+      context '422 Unprocessable Content' do
+        let!(:request_body) do
+          {}
+        end
+
+        response 422, 'Error response' do
+          schema type: :object
+
+          it description do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+
+            expect(json_response).to eql(
+              'error' => 'Invalid data',
+              'messages' => [
+                { 'temperature' => 'is missing' },
+                { 'pressure' => 'is missing' },
+                { 'humidity' => 'is missing' },
+                { 'wind_speed' => 'is missing' },
+                { 'wind_deg' => 'is missing' }
+              ]
+            )
+          end
+        end
+      end
+
+      context '404 Not Found' do
+        let!(:uuid) { SecureRandom.uuid }
+
+        response 404, 'Error response' do
+          schema type: :object
+
+          it description do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+
+            expect(json_response).to eql('error' => 'Not Found')
+          end
+        end
+      end
+
+      describe '401 Unauthorized' do
+        let(:Authorization) { '' }
+
+        response 401, 'Unauthorized' do
+          it nested_description(self.description, 'weather data saved') do |example|
+            submit_request(example.metadata)
+            assert_response_matches_metadata(example.metadata)
+
+            expect(response.body).to eql "HTTP Token: Access denied.\n"
+          end
+        end
       end
     end
   end

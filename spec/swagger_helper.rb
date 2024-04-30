@@ -40,8 +40,7 @@ RSpec.configure do |config|
             description: "Long-living token for making request after default token expiration.
                           Enter your token in the format 'Token token=your_token_value'"
           }
-        },
-        schemas: {}
+        }
       }
     }
   }
