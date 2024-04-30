@@ -26,4 +26,26 @@ class AdminUser < ApplicationRecord
   def organization_access?(organization)
     has_cached_role?(:organization_admin, organization) || has_cached_role?(:super_admin)
   end
+
+  def accessible_observation_results
+    if has_cached_role?(:super_admin)
+      Observations::Result.all
+    else
+      Observations::Result.joins(:source).where(
+        observations_sources: {
+          organization_id: assigned_organizations.pluck(:id)
+        }
+      )
+    end
+  end
+
+  def accessible_observation_sources
+    if has_cached_role?(:super_admin)
+      Observations::Source.all
+    else
+      Observations::Source.where(
+        organization_id: assigned_organizations.pluck(:id)
+      )
+    end
+  end
 end

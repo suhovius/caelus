@@ -10,6 +10,9 @@ module Weather
         data = fetch_weather_data_by(handler:, source:)
 
         source.observations_results.create!(data.to_h)
+      rescue BaseApi::Errors::Response => e
+        # TODO: This should be sent to some error trackers like sentry
+        ::Rails.logger.error(e.message)
       end
     end
 
