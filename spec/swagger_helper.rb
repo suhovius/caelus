@@ -32,13 +32,6 @@ RSpec.configure do |config|
           basic_auth: {
             type: :http,
             scheme: :basic
-          },
-          background_uploads_token_auth: {
-            type: :apiKey,
-            in: :header,
-            name: :Authorization,
-            description: "Long-living token for making request after default token expiration.
-                          Enter your token in the format 'Token token=your_token_value'"
           }
         }
       }
