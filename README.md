@@ -147,6 +147,10 @@ curl -v -H "Content-Type: application/json" -H 'Authorization: Token token=ca633
 
 ### Future improvements and ideas
 
+- Graphs at Dashboard should show data for the past 7 days by default. But there can way to either paginate that data by 7 days back and forh or to have some scrolling or to let user select desired range to which this selection must be applied.
+
+- Use Trailblazer Operation and Other Trailblazer parts at APIs and jobs layer (First cover this logic with unit specs. Then it can be refactored into trailblazer approach) https://trailblazer.to/2.1/docs/operation/. Try touUse another trailblazer elements as possible.
+
 - Dymanic/Reconfigurable data fetching schedules, might be useful testing or for example or some other use cases, maybe to reduce amount of weather api queries etc
 
 - Use postgis for Observations::Source latitude, longitude handling, that will improve the data integrity and can open way for further interesting features to work with coordinates tracking for example if this data comes from the mobile weather devices like Meteorological Ballons for example
@@ -158,6 +162,8 @@ curl -v -H "Content-Type: application/json" -H 'Authorization: Token token=ca633
 - API to fetch config data by WeatherDevice that device might ask form the backend server
 
 - More weather apis integration and different data collection/processing.
+
+- Add some API for users with login and token for example JWT (https://blog.appsignal.com/2023/08/23/secure-your-ruby-app-with-json-web-tokens.html https://www.bluebash.co/blog/rails-6-7-api-authentication-with-jwt/ https://github.com/jwt/ruby-jwt). With different formats like gRPC https://grpc.io/docs/languages/ruby/quickstart/ and GraphQL https://graphql.org/
 
 - Rails generator task to setup API calls wrapper class scaffold
 
