@@ -163,7 +163,9 @@ curl -v -H "Content-Type: application/json" -H 'Authorization: Token token=ca633
 
 - More weather apis integration and different data collection/processing.
 
-- Add some API for users with login and token for example JWT (https://blog.appsignal.com/2023/08/23/secure-your-ruby-app-with-json-web-tokens.html https://www.bluebash.co/blog/rails-6-7-api-authentication-with-jwt/ https://github.com/jwt/ruby-jwt). With different formats like gRPC https://grpc.io/docs/languages/ruby/quickstart/ and GraphQL https://graphql.org/
+- Add some API for users with login and token for example JWT (https://blog.appsignal.com/2023/08/23/secure-your-ruby-app-with-json-web-tokens.html https://www.bluebash.co/blog/rails-6-7-api-authentication-with-jwt/ https://github.com/jwt/ruby-jwt). With different formats like gRPC https://grpc.io/docs/languages/ruby/quickstart/ and GraphQL https://graphql.org/ Read trailblazer book for jwt auth logic examples
+
+- Create some embeddable widget for measured data with graphs maybe use some js framework for this
 
 - Rails generator task to setup API calls wrapper class scaffold
 
